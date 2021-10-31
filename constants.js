@@ -26,7 +26,8 @@ const secondSkill={
     mana: 25,
 }
 const thirdSkill ={
-    duration: 6350, // in miliseconds
+    mana:30,
+    duration: 3750, // in miliseconds
 }
 const firstSkillHotkey = 49;
 const secondSkillHotkey = 50;
