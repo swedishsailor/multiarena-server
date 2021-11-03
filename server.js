@@ -4,8 +4,8 @@ const io = require('socket.io')({
     }
 });
 
-const { FRAME_RATE, firstSkill, firstSkillHotkey, secondSkill, thirdSkill, exhaust } = require('./constants');
-const { gameLoop, getUpdatedVelocity, initGame, getUpdatedHp, imageFlip, getUpdatedSkill1, player1TakingDamage, player2TakingDamage, getUpdatedSkill2, getUpdatedSkill3 } = require('./game');
+const { FRAME_RATE, firstSkill, firstSkillHotkey, secondSkill, thirdSkill, exhaust, fourthSkill } = require('./constants');
+const { gameLoop, getUpdatedVelocity, initGame, getUpdatedHp, imageFlip, getUpdatedSkill1, player1TakingDamage, player2TakingDamage, getUpdatedSkill2, getUpdatedSkill3, getUpdatedSkill4 } = require('./game');
 const { makeid } = require('./utils');
 
 const state = {};
@@ -204,6 +204,35 @@ io.on('connection', client => {
 
                 }
             }, thirdSkill.duration);
+        }
+
+        const skill4 = getUpdatedSkill4(keyCode, state[roomName].players[client.number - 1]);
+
+        if (skill4 && (client.number - 1 === 1) && state[roomName].players[1].mana >= fourthSkill.mana) {
+            state[roomName].skill4.push(skill4);
+            setTimeout(function () {
+                if (state[roomName] !== null) {
+                    state[roomName].skill4.forEach(object => {
+                        const index = state[roomName].skill4.indexOf(object);
+                        state[roomName].skill4.splice(index, 1);
+                    })
+
+
+                }
+            }, fourthSkill.duration);
+        }
+        if (skill4 && (client.number - 1 === 0) && state[roomName].players[0].mana >= fourthSkill.mana) {
+            state[roomName].skill4.push(skill4);
+            setTimeout(function () {
+                if (state[roomName] !== null) {
+                    state[roomName].skill4.forEach(object => {
+                        const index = state[roomName].skill4.indexOf(object);
+                        state[roomName].skill4.splice(index, 1);
+                    })
+
+
+                }
+            }, fourthSkill.duration);
         }
     }
 }
