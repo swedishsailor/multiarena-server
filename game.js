@@ -250,12 +250,10 @@ function gameLoop(state) {
     });
     /* Skill 4 */
     skill4.forEach(object => {
-        console.log(playerTwo.pos.y, object.y + object.height);
         if (collisionCircleAndRectangle(playerTwo, object, 'Skill4Player2')) {
             /* Player cant go down when he collides with north wall */
             if (playerTwo.pos.y === object.y) {
                 player2MoveDown = false;
-                console.log('yike');
             }
             /* Player cant go right when he collided with west wall */
             else if (playerTwo.pos.x  === object.x) {
@@ -278,7 +276,6 @@ function gameLoop(state) {
         if (collisionCircleAndRectangle(playerOne, object, 'Skill4Player1')) {
             if (playerOne.pos.y === object.y) {
                 player1MoveDown = false;
-                console.log('yike');
             }
             /* Player cant go right when he collided with west wall */
             else if (playerOne.pos.x  === object.x) {
