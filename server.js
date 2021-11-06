@@ -249,10 +249,12 @@ io.on('connection', client => {
             console.error(e);
             return;
         }
-        const negateVel = getUpdatedVelocity(0, state[roomName].players[client.number - 1].vel);
+        if(state[roomName] != undefined && (keyCode!== 37 || 65) && (keyCode!== 38 || 87) &&( keyCode!==  39 || 68) && (keyCode!== 40 || 83) ){
+        const negateVel = getUpdatedVelocity(undefined, state[roomName].players[client.number - 1].vel);
         if (negateVel) {
             state[roomName].players[client.number - 1].vel = negateVel;
         }
+    }
     }
 });
 

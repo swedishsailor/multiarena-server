@@ -250,6 +250,7 @@ function gameLoop(state) {
     });
     /* Skill 4 */
     skill4.forEach(object => {
+
         if (collisionCircleAndRectangle(playerTwo, object, 'Skill4Player2')) {
             /* Player cant go down when he collides with north wall */
             if (playerTwo.pos.y === object.y) {
@@ -295,6 +296,7 @@ function gameLoop(state) {
             player1MoveLeft = true;
             player1MoveRight = true;
         }
+    
     });
 
     player1TakingDamage(1);
@@ -380,34 +382,44 @@ function healingPotions(state) {
 function getUpdatedVelocity(keyCode, state) {
 
     if (state !== null) {
-
-        if (keyCode === 37) {// left
+        if (keyCode === 37 || keyCode === 65) {// left
+            state.x = 0;
             return { x: -playerSpeed, y: state.y };
         }
-        else if (keyCode === 38) {// down
+        else if ((keyCode === 38 || keyCode === 87) && (keyCode === 37 || keyCode === 65)){
+            state.x = 0;
+            state.y = 0;
+            return { x: -playerSpeed, y: -playerSpeed };
+        }
+        else if ((keyCode === 39 || keyCode === 68) && (keyCode === 40 || keyCode === 83)){
+            state.x = 0;
+            state.y = 0;
+            return { x: playerSpeed, y: playerSpeed };
+        }
+        else if ((keyCode === 38 || keyCode === 87) && (keyCode === 39 || keyCode === 68)){
+            state.x = 0;
+            state.y = 0;
+            return { x: playerSpeed, y: -playerSpeed };
+        }
+        else if ((keyCode === 37 || keyCode === 65) && (keyCode === 40 || keyCode === 83)){
+            state.x = 0;
+            state.y = 0;
+            return { x: -playerSpeed, y: playerSpeed };
+        }
+        else if (keyCode === 38 || keyCode === 87) {// down
+            state.y = 0;
             return { x: state.x, y: -playerSpeed };
         }
-        else if (keyCode === 39) {// right
+        else if (keyCode === 39 || keyCode === 68) {// right
+            state.x = 0;
             return { x: playerSpeed, y: state.y };
         }
-        else if (keyCode === 40) {// up
-            return { x: state.x, y: playerSpeed };
-        }
-        else if (keyCode === 65) {// left
-            return { x: -playerSpeed, y: state.y };
-        }
-        else if (keyCode === 87) {// down
-            return { x: state.x, y: -playerSpeed };
-        }
-        else if (keyCode === 68) {// right
-            return { x: playerSpeed, y: state.y };
-        }
-        else if (keyCode === 83) {// up
+        else if (keyCode === 40 || keyCode === 83) {// up
+            state.y = 0;
             return { x: state.x, y: playerSpeed };
         } else {
-            return { x: 0, y: 0 };
+            return  {x: 0, y: 0 };
         }
-
     }
 }
 
