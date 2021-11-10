@@ -6,6 +6,7 @@ const FRAME_RATE = 60;
 const gameHeight = 700;
 const gameWidth = 1360;
 
+
 /*
  * Player options and constants
  */

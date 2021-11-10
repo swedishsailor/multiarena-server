@@ -11,12 +11,16 @@ const { makeid } = require('./utils');
 const state = {};
 const clientRooms = {};
 
+let playerColor;
+let playerId;
+
 
 io.on('connection', client => {
     client.on('keydown', handleKeydown);
     client.on('keyup', handleKeyUp);
     client.on('newGame', handleNewGame);
     client.on('joinGame', handleJoinGame);
+    client.on('playersColors', handlePlayersColors);
 
     function handleJoinGame(roomName) {
         const room = io.sockets.adapter.rooms[roomName];
@@ -62,6 +66,11 @@ io.on('connection', client => {
         client.join(roomName);
         client.number = 1;
         client.emit('init', 1);
+    }
+
+    function handlePlayersColors(color, playerNumber){
+        playerColor = color;
+        playerId = playerNumber;
     }
 
     function handleKeydown(keyCode) {
@@ -122,7 +131,7 @@ io.on('connection', client => {
             }, 10);
         }
 
-        const img = imageFlip(keyCode, client.number - 1);
+        const img = imageFlip(keyCode, client.number - 1, state[roomName].players, playerColor, playerId);
 
         if (img && (client.number - 1 === 0)) {
             state[roomName].players[client.number - 1].img = img;
